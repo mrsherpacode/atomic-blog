@@ -1,3 +1,4 @@
+//  This is context provider .
 import { useContext, useState } from "react";
 import { faker } from "@faker-js/faker";
 import { createContext } from "react";
@@ -57,7 +58,7 @@ function PostProvider({ children }) {
   );
 }
 
-//  Here, i'm creating a custom hook for the context
+//Here, i'm creating a custom hook for the context
 function usePost() {
   const context = useContext(PostContext);
   return context;
