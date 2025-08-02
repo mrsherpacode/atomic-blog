@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import { PostProvider, usePost } from "./PostContext";
 import { faker } from "@faker-js/faker";
 
@@ -71,15 +71,15 @@ function Results() {
   const { posts } = usePost();
   return <p>🚀 {posts.length} atomic posts found</p>;
 }
-
-function Main() {
+// Here, i'm using memo hook to prevent wasted re-render.
+const Main = memo(function Main() {
   return (
     <main>
       <FormAddPost />
       <Posts />
     </main>
   );
-}
+});
 
 function Posts() {
   return (

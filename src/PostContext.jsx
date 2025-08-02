@@ -1,5 +1,5 @@
 //  This is context provider .
-import { useContext, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { faker } from "@faker-js/faker";
 import { createContext } from "react";
 
@@ -41,20 +41,21 @@ function PostProvider({ children }) {
   function handleClearPosts() {
     setPosts([]);
   }
+  // Here, i'm using useMemo hook to prevent wasted render //
+  const value = useMemo(() => {
+    return {
+      posts: searchedPosts,
+      onAddPost: handleAddPost,
+      onClearPosts: handleClearPosts,
+      searchQuery,
+      setSearchQuery,
+    };
+  }, [searchQuery, searchedPosts]);
 
   return (
     //2)Here, i'm providing value to child components.
-    <PostContext.Provider
-      value={{
-        posts: searchedPosts,
-        onAddPost: handleAddPost,
-        onClearPosts: handleClearPosts,
-        searchQuery,
-        setSearchQuery,
-      }}
-    >
-      {children}
-    </PostContext.Provider>
+    //  value is from useMemo hook
+    <PostContext.Provider value={value}>{children}</PostContext.Provider>
   );
 }
 
